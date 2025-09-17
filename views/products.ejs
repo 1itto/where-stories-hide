@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where Stories Hide CTF - Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/products.css">
+<style>
+/* Book cover styles using standard dimensions */
+.product-image {
+  height: 320px; /* Approx 6x9 ratio */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.product-image-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: 'Georgia', serif;
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* The Last Echo of the Manor Cover */
+.manor-echo {
+  background: linear-gradient(135deg, #2c3e50, #4a235a);
+  border: 15px solid #2c1b27;
+  border-top: 25px solid #2c1b27;
+  border-bottom: 25px solid #2c1b27;
+}
+
+.manor-echo::before {
+  content: "🏰";
+  font-size: 4rem;
+  position: absolute;
+  opacity: 0.8;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.manor-echo::after {
+  content: "THE LAST ECHO OF THE MANOR";
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+/* The Clockmaker's Forgotten Dream Cover */
+.clockmaker-dream {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  border: 15px solid #1a1f2e;
+  border-top: 25px solid #1a1f2e;
+  border-bottom: 25px solid #1a1f2e;
+}
+
+.clockmaker-dream::before {
+  content: "⏰";
+  font-size: 4rem;
+  position: absolute;
+  opacity: 0.8;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.clockmaker-dream::after {
+  content: "THE CLOCKMAKER'S FORGOTTEN DREAM";
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  padding: 0 10px;
+}
+
+/* The Starfall Prophecies Cover */
+.starfall-prophecies {
+  background: linear-gradient(135deg, #0c2461, #1e3799);
+  border: 15px solid #0a1530;
+  border-top: 25px solid #0a1530;
+  border-bottom: 25px solid #0a1530;
+}
+
+.starfall-prophecies::before {
+  content: "🌠";
+  font-size: 4rem;
+  position: absolute;
+  opacity: 0.8;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.starfall-prophecies::after {
+  content: "THE STARFALL PROPHECIES";
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+/* The Whispering Ink Cover */
+.whispering-ink {
+  background: linear-gradient(135deg, #3d3d3d, #1a1a1a);
+  border: 15px solid #1e1e1e;
+  border-top: 25px solid #1e1e1e;
+  border-bottom: 25px solid #1e1e1e;
+}
+
+.whispering-ink::before {
+  content: "📜";
+  font-size: 4rem;
+  position: absolute;
+  opacity: 0.8;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.whispering-ink::after {
+  content: "THE WHISPERING INK";
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+/* Add author names to all covers */
+.product-image-inner::before {
+  content: "BY J. AUTHERSON";
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  font-size: 0.9rem;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+/* Add decorative elements */
+.manor-echo .decoration {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(90deg, transparent, #8a6d3b, transparent);
+  opacity: 0.6;
+}
+
+.clockmaker-dream .decoration {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #f1c40f, transparent);
+  opacity: 0.6;
+}
+
+.starfall-prophecies .decoration {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 15px;
+  background: radial-gradient(circle, #f1c40f 0%, transparent 70%);
+  opacity: 0.4;
+}
+
+.whispering-ink .decoration {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(90deg, transparent, #7f8c8d, transparent);
+  opacity: 0.6;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1>Where Stories Hide CTF</h1>
+  </div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="products">Products</a>
+    <a href="cart" class="cart-link">Cart <span class="cart-count">0</span></a>
+    <a href="dashboard">Dashboard</a>
+  </nav>
+</header>
+
+<main class="container">
+  <div class="products-header">
+    <h2>Our Collection</h2>
+    <p>Discover our selection of rare and mysterious books</p>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-image">
+        <div class="product-image-inner manor-echo">
+          <div class="decoration"></div>
+        </div>
+      </div>
+      <div class="product-info">
+        <h3 class="product-title">The Last Echo of the Manor</h3>
+        <p class="product-description">A gothic tale of a noble family, a decaying estate, and a secret that echoes through its halls long after its last inhabitant has vanished.</p>
+        <p class="product-price">$99.99</p>
+        <button class="btn" onclick="addToCart('The Last Echo of the Manor', 99.99)">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <div class="product-image-inner clockmaker-dream">
+          <div class="decoration"></div>
+        </div>
+      </div>
+      <div class="product-info">
+        <h3 class="product-title">The Clockmaker's Forgotten Dream</h3>
+        <p class="product-description">A beautifully illustrated novel about a clockmaker who builds a device that can measure dreams, and the mysterious client who commissions him for a forbidden purpose.</p>
+        <p class="product-price">$64.99</p>
+        <button class="btn" onclick="addToCart('The Clockmaker\'s Forgotten Dream', 64.99)">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <div class="product-image-inner starfall-prophecies">
+          <div class="decoration"></div>
+        </div>
+      </div>
+      <div class="product-info">
+        <h3 class="product-title">The Starfall Prophecies</h3>
+        <p class="product-description">An epic fantasy about an ancient prophecy revealed by falling stars, and the unlikely group of travelers who must discover its meaning to save their world from an ancient darkness.</p>
+        <p class="product-price">$34.99</p>
+        <button class="btn" onclick="addToCart('The Starfall Prophecies', 34.99)">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <div class="product-image-inner whispering-ink">
+          <div class="decoration"></div>
+        </div>
+      </div>
+      <div class="product-info">
+        <h3 class="product-title">The Whispering Ink</h3>
+        <p class="product-description">A historical mystery following a rare book conservator who discovers a journal written in a vanishing ink that reveals a centuries-old conspiracy.</p>
+        <p class="product-price">$39.99</p>
+        <button class="btn" onclick="addToCart('The Whispering Ink', 39.99)">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Where Stories Hide CTF &copy; 2025 | A Capture The Flag Challenge</p>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

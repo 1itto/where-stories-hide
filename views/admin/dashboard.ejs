@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where Stories Hide CTF - Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/main.css">
+<style>
+/* Admin Dashboard Styles */
+.admin-dashboard {
+  padding: 2rem 0;
+}
+
+.admin-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.admin-header h2 {
+  color: var(--primary);
+  text-shadow: 0 0 6px var(--primary);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.admin-header h2 i {
+  color: #ff3366;
+}
+
+.admin-subtitle {
+  color: var(--secondary);
+  font-size: 1.1rem;
+}
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.admin-stat-card {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid rgba(191,0,255,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff3366, #bf00ff);
+}
+
+.admin-stat-value {
+  font-size: 2.5rem;
+  color: #ff3366;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.admin-stat-label {
+  color: var(--secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.admin-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.admin-action-btn {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid rgba(191,0,255,0.1);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.admin-action-btn:hover {
+  transform: translateY(-3px);
+  border-color: #ff3366;
+  box-shadow: 0 5px 15px rgba(255,51,102,0.3);
+}
+
+.admin-action-btn i {
+  font-size: 2rem;
+  color: #ff3366;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.admin-action-btn h3 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.admin-action-btn p {
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.admin-section {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 2rem 0;
+  border: 1px solid rgba(191,0,255,0.1);
+}
+
+.admin-section h3 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(191,0,255,0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-section h3 i {
+  color: #ff3366;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(191,0,255,0.1);
+}
+
+.admin-table th {
+  color: var(--primary);
+  font-weight: bold;
+  background: rgba(191,0,255,0.05);
+}
+
+.admin-table tr:hover {
+  background: rgba(191,0,255,0.05);
+}
+
+/* Admin CTF elements */
+.admin-ctf-hint {
+  background: rgba(255, 51, 102, 0.1);
+  border-left: 4px solid #ff3366;
+  padding: 1rem;
+  margin: 2rem 0;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.admin-flag-input {
+  display: flex;
+  margin: 1rem 0;
+}
+
+.admin-flag-input input {
+  flex-grow: 1;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 51, 102, 0.3);
+  border-radius: 5px 0 0 5px;
+  background: rgba(0,0,0,0.3);
+  color: var(--text);
+  font-family: 'Orbitron', monospace;
+}
+
+.admin-flag-input button {
+  border-radius: 0 5px 5px 0;
+  background: linear-gradient(90deg, #ff3366, #bf00ff);
+}
+
+.admin-flag-input button:hover {
+  background: linear-gradient(90deg, #bf00ff, #ff3366);
+}
+
+/* Hidden flag in the title */
+.admin-header::after {
+  content: "CTF{4dm1n_d4shb04rd_fl4g}";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: transparent;
+  font-size: 1px;
+  user-select: all;
+}
+
+/* System status */
+.system-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00ff00;
+  box-shadow: 0 0 5px #00ff00;
+}
+
+.status-text {
+  color: #00ff00;
+}
+
+/* Tabs for admin sections */
+.admin-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(191,0,255,0.2);
+  margin-bottom: 1.5rem;
+}
+
+.admin-tab {
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  color: var(--text);
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+}
+
+.admin-tab.active {
+  color: var(--primary);
+  border-bottom: 3px solid #ff3366;
+}
+
+.admin-tab:hover {
+  color: var(--secondary);
+}
+
+.admin-tab-content {
+  display: none;
+}
+
+.admin-tab-content.active {
+  display: block;
+}
+
+/* Form styles for admin */
+.admin-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.admin-form-group {
+  margin-bottom: 1rem;
+}
+
+.admin-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--secondary);
+  font-weight: bold;
+}
+
+.admin-form-group input,
+.admin-form-group select,
+.admin-form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid rgba(191,0,255,0.3);
+  border-radius: 5px;
+  background: rgba(0,0,0,0.3);
+  color: var(--text);
+  font-family: 'Orbitron', monospace;
+}
+
+.admin-form-actions {
+  grid-column: span 2;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+/* User management specific */
+.user-role {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.role-admin {
+  background: rgba(255, 51, 102, 0.2);
+  color: #ff3366;
+}
+
+.role-user {
+  background: rgba(0, 255, 247, 0.2);
+  color: var(--secondary);
+}
+
+.role-moderator {
+  background: rgba(191, 0, 255, 0.2);
+  color: var(--primary);
+}
+
+/* Quick stats */
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.quick-stat {
+  background: rgba(0,0,0,0.2);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.quick-stat-value {
+  font-size: 1.5rem;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.quick-stat-label {
+  font-size: 0.8rem;
+  color: var(--text);
+  margin-top: 0.5rem;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1>Where Stories Hide CTF</h1>
+  </div>
+  <nav>
+    <a href="../">Home</a>
+    <a href="../products">Products</a>
+    <a href="../admin/dashboard">Dashboard</a>
+  </nav>
+</header>
+
+<main class="container">
+  <div class="admin-dashboard">
+    <div class="admin-header">
+      <h2><i class="fas fa-cog"></i> Admin Dashboard</h2>
+      <p class="admin-subtitle">ITTO_CTF{6hg6360i-305$-127k-305$-eif11lsw}</p>
+    </div>
+
+    <div class="admin-stats">
+      <div class="admin-stat-card">
+        <div class="admin-stat-value">305</div>
+        <div class="admin-stat-label">Total Users</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-value">1</div>
+        <div class="admin-stat-label">CTF Solves</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-value">$9,832</div>
+        <div class="admin-stat-label">Revenue</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-value">12</div>
+        <div class="admin-stat-label">Security Alerts</div>
+      </div>
+    </div>
+
+    <div class="admin-actions">
+      <div class="admin-action-btn" onclick="showTab('users')">
+        <i class="fas fa-users"></i>
+        <h3>User Management</h3>
+        <p>Manage website users and permissions</p>
+      </div>
+      <div class="admin-action-btn" onclick="showTab('products')">
+        <i class="fas fa-book"></i>
+        <h3>Product Catalog</h3>
+        <p>Add, edit, or remove products</p>
+      </div>
+      <div class="admin-action-btn" onclick="showTab('orders')">
+        <i class="fas fa-shopping-cart"></i>
+        <h3>Orders</h3>
+        <p>View and process customer orders</p>
+      </div>
+      <div class="admin-action-btn" onclick="showTab('ctf')">
+        <i class="fas fa-flag"></i>
+        <h3>CTF Management</h3>
+        <p>Manage challenges and flags</p>
+      </div>
+    </div>
+
+    <!-- User Management Tab -->
+    <div class="admin-section" id="users-tab">
+      <h3><i class="fas fa-users"></i> User Management</h3>
+
+      <div class="quick-stats">
+        <div class="quick-stat">
+          <div class="quick-stat-value">305</div>
+          <div class="quick-stat-label">Regular Users</div>
+        </div>
+        <div class="quick-stat">
+          <div class="quick-stat-value">305</div>
+          <div class="quick-stat-label">CTF Participants</div>
+        </div>
+        <div class="quick-stat">
+          <div class="quick-stat-value">4</div>
+          <div class="quick-stat-label">Moderators</div>
+        </div>
+        <div class="quick-stat">
+          <div class="quick-stat-value">3</div>
+          <div class="quick-stat-label">Administrators</div>
+        </div>
+      </div>
+
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Joined</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach(user => { %>
+      <tr>
+        <td><%= user.username %></td>
+        <td>
+          <% if(user.role === 'admin'){ %>
+            <span class="user-role role-admin">Admin</span>
+          <% } else if(user.role === 'moderator'){ %>
+            <span class="user-role role-moderator">Moderator</span>
+          <% } else { %>
+            <span class="user-role role-user">User</span>
+          <% } %>
+        </td>
+        <td><%= user.created_at %></td>
+        <td>Active</td>
+        <td>
+          <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Edit</button>
+        </td>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>
+</main>
+
+<footer>
+  <p>Where Stories Hide CTF &copy; 2025 | A Capture The Flag Challenge</p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const cartCount = localStorage.getItem('cartCount') || 0;
+    document.querySelector('.cart-count').textContent = cartCount;
+  });
+
+  function showTab(tabName) {
+    document.querySelectorAll('.admin-section').forEach(section => {
+      section.style.display = 'none';
+    });
+
+    document.getElementById(tabName + '-tab').style.display = 'block';
+  }
+
+  function showCtfTab(tabName) {
+    document.querySelectorAll('.admin-tab-content').forEach(tab => {
+      tab.classList.remove('active');
+    });
+
+    document.querySelectorAll('.admin-tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+  }
+</script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

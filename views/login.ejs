@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where Stories Hide CTF - Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/auth.css">
+
+<style>
+/* Error/Success Messages */
+.input-message {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  font-family: 'Orbitron', monospace;
+}
+
+.input-message.error {
+  color: #ff4d4f; /* bright red */
+}
+
+.message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Orbitron', monospace;
+}
+
+.message.error {
+  color: #ff4d4f; /* red */
+}
+
+.message.success {
+  color: #4CAF50; /* green */
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1>Where Stories Hide CTF</h1>
+  </div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="login">Login</a>
+    <a href="signup">Signup</a>
+  </nav>
+</header>
+
+<main class="container">
+  <div class="form-container">
+    <h2>Login</h2>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="login-username">Username</label>
+        <input id="login-username" type="text" name="username" placeholder="Enter your username" required>
+        <div class="input-message" id="username-message"></div>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" name="password" placeholder="Enter your password" required>
+        <div class="input-message" id="password-message"></div>
+      </div>
+      <button class="btn" style="width: 100%" type="submit">Login</button>
+    </form>
+
+    <!-- General message for success or global errors -->
+    <div id="login-message" class="message"></div>
+
+    <div class="auth-link">
+      Don't have an account? <a href="signup">Sign Up</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>Where Stories Hide CTF &copy; 2025 | A Capture The Flag Challenge</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

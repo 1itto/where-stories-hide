@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where Stories Hide CTF - Admin Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/main.css">
+<style>
+/* Admin-specific styles */
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 2rem 0;
+}
+
+.admin-login-box {
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(191,0,255,0.3);
+  border: 1px solid rgba(191,0,255,0.2);
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-login-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #ff3366, #bf00ff, #00fff7);
+}
+
+.admin-login-box h2 {
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 6px var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.admin-login-box h2 i {
+  color: #ff3366;
+}
+
+.admin-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.admin-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--secondary);
+  font-weight: bold;
+}
+
+.admin-form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid rgba(191,0,255,0.3);
+  border-radius: 5px;
+  background: rgba(0,0,0,0.3);
+  color: var(--text);
+  font-family: 'Orbitron', monospace;
+  transition: all 0.3s;
+}
+
+.admin-form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+}
+
+.admin-form-group input[type="password"] {
+  letter-spacing: 0.2em;
+}
+
+.admin-security-notice {
+  background: rgba(255, 51, 102, 0.1);
+  border-left: 4px solid #ff3366;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+/* Messages */
+.admin-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Orbitron', monospace;
+}
+
+.admin-message.error {
+  color: #ff3366;
+}
+
+.admin-message.success {
+  color: #4CAF50;
+}
+
+.admin-input-message {
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  font-family: 'Orbitron', monospace;
+  color: #ff3366;
+}
+
+.admin-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--card-bg);
+  background: linear-gradient(90deg, #ff3366, #bf00ff);
+  transition: 0.3s;
+  border: none;
+  cursor: pointer;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.admin-btn:hover {
+  background: linear-gradient(90deg, #bf00ff, #ff3366);
+  box-shadow: 0 0 12px #ff3366;
+}
+
+.admin-login-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1>Where Stories Hide CTF</h1>
+  </div>
+  <nav>
+    <a href="../">Home</a>
+    <a href="../admin/dashboard">Dashboard</a>
+    <a href="/admin">Admin</a>
+  </nav>
+</header>
+
+<main class="container">
+  <div class="admin-login-container">
+    <div class="admin-login-box">
+      <h2><i class="fas fa-shield-alt"></i> Admin Portal</h2>
+
+      <div class="admin-security-notice">
+        <strong><i class="fas fa-exclamation-triangle"></i> Security Notice:</strong>
+        This portal is restricted to authorized administrators only.
+      </div>
+
+      <form id="admin-login-form">
+        <div class="admin-form-group">
+          <label for="admin-username"><i class="fas fa-user"></i> Username</label>
+          <input type="text" name="username" id="admin-username" placeholder="Enter your username" required>
+          <div class="admin-input-message" id="username-message"></div>
+        </div>
+
+        <div class="admin-form-group">
+          <label for="admin-password"><i class="fas fa-key"></i> Password</label>
+          <input type="password" name="password" id="admin-password" placeholder="Enter your password" required>
+          <div class="admin-input-message" id="password-message"></div>
+        </div>
+
+        <button class="admin-btn" type="submit">Secure Login</button>
+      </form>
+
+      <div class="admin-message" id="admin-message"></div>
+
+      <div class="admin-login-footer">
+        <i class="fas fa-lock"></i> Secure connection encrypted
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>Where Stories Hide CTF &copy; 2025 | A Capture The Flag Challenge</p>
+</footer>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script>
+const form = document.getElementById('admin-login-form')
+const messageDiv = document.getElementById('admin-message')
+const usernameMsg = document.getElementById('username-message')
+const passwordMsg = document.getElementById('password-message')
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault() // stop default submission
+
+  messageDiv.textContent = ''
+  messageDiv.classList.remove('error', 'success')
+  usernameMsg.textContent = ''
+  passwordMsg.textContent = ''
+
+  const username = document.getElementById('admin-username').value
+  const password = document.getElementById('admin-password').value
+
+  try {
+    const res = await fetch('/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      if (data.error.includes('Username')) {
+        usernameMsg.textContent = '⚠ ' + data.error
+      } else if (data.error.includes('password') || data.error.includes('Invalid')) {
+        passwordMsg.textContent = '⚠ ' + data.error
+      } else {
+        messageDiv.textContent = '⚠ ' + data.error
+        messageDiv.classList.add('error')
+      }
+    } else {
+      messageDiv.textContent = '✔ ' + data.message
+      messageDiv.classList.add('success')
+      form.reset()
+
+      setTimeout(() => {
+        window.location.href = '/admin/dashboard'
+      }, 1000)
+    }
+
+  } catch(err) {
+    messageDiv.textContent = '⚠ Something went wrong!'
+    messageDiv.classList.add('error')
+  }
+})
+</script>
+</body>
+</html>

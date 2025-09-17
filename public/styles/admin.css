@@ -1,0 +1,89 @@
+/* Admin Pages */
+.admin-login {
+  max-width: 400px;
+}
+
+.admin-dashboard h2 {
+  color: var(--primary);
+  text-shadow: 0 0 6px var(--primary);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.admin-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.admin-menu-item {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid rgba(191,0,255,0.1);
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.admin-menu-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: 0 5px 15px rgba(191,0,255,0.3);
+}
+
+.admin-menu-item i {
+  font-size: 2rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.admin-section {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 2rem 0;
+  border: 1px solid rgba(191,0,255,0.1);
+}
+
+.admin-section h3 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(191,0,255,0.3);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(191,0,255,0.1);
+}
+
+.admin-table th {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.admin-table tr:hover {
+  background: rgba(191,0,255,0.05);
+}
+
+.admin-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
