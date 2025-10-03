@@ -27,18 +27,10 @@ CREATE TABLE IF NOT EXISTS admin (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 username TEXT NOT NULL UNIQUE,
 password TEXT NOT NULL,
-role TEXT NOT NULL
+role TEXT NOT NULL,
+created_at TEXT NOT NULL
 )
 `).run()
-
-const user = 'Administrator'
-const pass = 'AdministratorSuperSecretPassword'
-const role = 'admin'
-const check = db.prepare('SELECT 1 FROM admin WHERE username = ?').get(user)
-
-if (!check) {
-db.prepare(`INSERT INTO admin (username, password, role) VALUES (?, ?, ?)`).run(user, pass, role)
-}
 
 })
 
@@ -161,22 +153,26 @@ res.render('admin/login')
 
 app.get('/admin/dashboard', isAdmin, (req, res) => {
 
-const usersStatement = db.prepare('SELECT * FROM users')
-const users = usersStatement.all()
+const users = db.prepare("SELECT *, 'user' AS type FROM users").all()
+const admins = db.prepare("SELECT *, 'admin' AS type FROM admin").all()
 
-res.render('admin/dashboard', { users })
+const allUsers = [...admins, ...users]
+
+res.render('admin/dashboard', { users: allUsers })
 })
 
 app.post('/signup', async (req, res) => {
 
 try {
-const { username, password } = req.body
 
-if (typeof username !== 'string') username = ''
-if (typeof password !== 'string') password = ''
+const body = req.body || {}
+let { username = '', password = '' } = body
+
+username = username.trim()
+password = password.trim()
 
 if (!username || !password) {
-return res.status(400).json({ error: 'You cannot leave it empty' })
+return res.status(400).json({ error: 'Username and password cannot be empty' })
 }
 
 if (username && !username.match(/^[A-Za-z0-9]+$/)) {
@@ -208,13 +204,15 @@ return res.status(500).json({ error: 'Internal Server Error' })
 app.post('/login', async (req, res) => {
 
 try {
-const { username, password } = req.body
 
-if (typeof username !== 'string') username = ''
-if (typeof password !== 'string') password = ''
+const body = req.body || {}
+let { username = '', password = '' } = body
+
+username = username.trim()
+password = password.trim()
 
 if (!username || !password) {
-return res.status(400).json({ error: 'You cannot leave it empty' })
+return res.status(400).json({ error: 'Username and password cannot be empty' })
 }
 
 if (username && !username.match(/^[A-Za-z0-9]+$/)) {
@@ -252,16 +250,18 @@ return res.status(500).json({ error: 'Internal Server Error' })
 app.post('/admin/login', async (req, res) => {
 
 try {
-const { username, password } = req.body
 
-if (typeof username !== 'string') username = ''
-if (typeof password !== 'string') password = ''
+const body = req.body || {}
+let { username = '', password = '' } = body
+
+username = username.trim()
+password = password.trim()
 
 if (!username || !password) {
-return res.status(400).json({ error: 'You cannot leave it empty' })
+return res.status(400).json({ error: 'Username and password cannot be empty' })
 }
 
-const names = ['union', 'select', 'insert', 'update', 'delete', 'drop', 'alter', 'create', 'replace', 'exec', 'pragma', 'attach', 'detach', '--', '#', ';']
+const names = ['union', 'select', 'insert', 'update', 'delete', 'drop', 'alter', 'create', 'replace', 'exec', 'pragma', 'attach', 'detach', '--', '#', ';', '/*', '*/']
 
 if (username) {
 const loweruser = username.toLowerCase()
@@ -290,7 +290,7 @@ maxAge: 1000 * 60 * 60 * 24
 res.status(200).json({ message: 'Admin login successfully', admin_details: { id: admin.id, username: admin.username, role: admin.role}, token: jwtToken })
 
 } catch(err) {
-return res.status(500).json({ error: 'Internal Server Error' })
+return res.status(500).json({ error: 'Invalid username or password' })
 }
 
 })

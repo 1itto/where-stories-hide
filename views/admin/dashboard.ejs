@@ -369,7 +369,7 @@
   <div class="admin-dashboard">
     <div class="admin-header">
       <h2><i class="fas fa-cog"></i> Admin Dashboard</h2>
-      <p class="admin-subtitle">ITTO_CTF{6hg6360i-305$-127k-305$-eif11lsw}</p>
+      <p class="admin-subtitle">CyberShe{CyberSh3-1s-th3-b3st}</p>
     </div>
 
     <div class="admin-stats">
@@ -428,11 +428,11 @@
           <div class="quick-stat-label">CTF Participants</div>
         </div>
         <div class="quick-stat">
-          <div class="quick-stat-value">4</div>
+          <div class="quick-stat-value">2</div>
           <div class="quick-stat-label">Moderators</div>
         </div>
         <div class="quick-stat">
-          <div class="quick-stat-value">3</div>
+          <div class="quick-stat-value">4</div>
           <div class="quick-stat-label">Administrators</div>
         </div>
       </div>
@@ -447,27 +447,27 @@
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody>
-    <% users.forEach(user => { %>
-      <tr>
-        <td><%= user.username %></td>
-        <td>
-          <% if(user.role === 'admin'){ %>
-            <span class="user-role role-admin">Admin</span>
-          <% } else if(user.role === 'moderator'){ %>
-            <span class="user-role role-moderator">Moderator</span>
-          <% } else { %>
-            <span class="user-role role-user">User</span>
-          <% } %>
-        </td>
-        <td><%= user.created_at %></td>
-        <td>Active</td>
-        <td>
-          <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Edit</button>
-        </td>
-      </tr>
-    <% }); %>
-  </tbody>
+ <tbody>
+  <% users.forEach(user => { %>
+    <tr>
+      <td><%= user.username %></td>
+      <td>
+       <% if(user.role === 'admin'){ %>
+       <span class="user-role role-admin">Admin</span>
+       <% } else if(user.role === 'moderator'){ %>
+       <span class="user-role role-moderator">Moderator</span>
+       <% } else { %>
+       <span class="user-role role-user">User</span>
+       <% } %>
+      </td>
+      <td><%= user.created_at %></td>
+      <td>Active</td>
+      <td>
+        <button class="btn">Edit</button>
+      </td>
+    </tr>
+  <% }) %>
+</tbody>
 </table>
 </main>
 
